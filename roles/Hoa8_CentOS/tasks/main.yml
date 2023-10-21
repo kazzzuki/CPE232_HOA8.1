@@ -1,0 +1,26 @@
+  - name: Update CentOS Package Cache
+    dnf:
+      update_cache: yes
+      state: present
+      use_backend: dnf
+    when: ansible_distribution == "CentOS"
+
+  - name: Resolving dpfg Issue
+    command: sudo dpkg --configure -a
+    when: ansible_distribution == "CentOS"
+    async: 3600
+    poll: 0
+
+  - name: Waiting(pause) for dpkg to complete
+    pause:
+      seconds: 10
+    when: ansible_distribution == "CentOS"
+
+  - name: Install Nagios in CentOS
+    dnf:
+      name: nagios
+      state: present
+      use_backend: dnf
+    when: ansible_distribution == "CentOS"
+    async: 3600
+    poll: 0

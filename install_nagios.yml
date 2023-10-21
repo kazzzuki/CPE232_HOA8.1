@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - Hoa8_Ubuntu
+    - Hoa8_CentOS
